@@ -1,12 +1,10 @@
-module.exports = function chainWebpack(config) {
+export default  function chainWebpack(config) {
   config.module
-    .rule('vtk-glsl')
-    .test(/\.glsl$/i)
-    .include.add(/vtk\.js[/\\]Sources/)
-    .end()
-    .use('shader-loader')
-    .loader('shader-loader')
-    .end();
+      .rule("glsl")
+      .test(/\.(glsl|vs|fs)$/) // 匹配 .glsl / .vs / .fs 文件
+      .type('javascript/auto') // 防止 Webpack 解析成 URL
+      .use('shader-loader')
+      .loader('shader-loader');
 
   config.module
     .rule('vtk-js')
@@ -18,16 +16,12 @@ module.exports = function chainWebpack(config) {
     .end();
 
   config.module
-    .rule('vtk-worker')
-    .test(/\.worker\.js$/)
-    .include.add(/vtk\.js[/\\]Sources/)
-    .end()
-    .use('worker-loader')
-    .loader('worker-loader')
-    .options({ inline: 'no-fallback' })
-    .end();
+    .rule('worker')
+      .test(/\.worker\.js$/)
+      .use('worker-loader')
+      .loader('worker-loader');
 
-  config.module
+/*  config.module
     .rule('vtk-css')
     .test(/\.css$/)
     .exclude.add(/\.module\.css$/)
@@ -38,7 +32,7 @@ module.exports = function chainWebpack(config) {
     .loader('style-loader')
     .loader('css-loader')
     .loader('postcss-loader')
-    .end();
+    .end();*/
 
   config.module
     .rule('vtk-svg')
@@ -49,7 +43,7 @@ module.exports = function chainWebpack(config) {
     .loader('raw-loader')
     .end();
 
-  config.module
+ /* config.module
     .rule('vtk-module-css')
     .test(/\.css$/)
     .include.add(/vtk\.js[/\\]Sources/)
@@ -64,5 +58,6 @@ module.exports = function chainWebpack(config) {
       },
     })
     .loader('postcss-loader')
-    .end();
+    .end();*/
+
 }
