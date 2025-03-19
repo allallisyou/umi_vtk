@@ -15,7 +15,7 @@ export default function Layout() {
           <a href="https://github.com/umijs/umi">Github</a>
         </li>
       </ul>
-      <Outlet />
+      {<Outlet />}
     </div>
   );
 }
